@@ -1,0 +1,1 @@
+<a class="google-button" href="{{ route('auth.google', ['intent' => $intent ?? 'login']) }}"><img src="/assets/google-g.png" alt="" width="20" height="20"><span>{{ $label ?? __('shop.google_login') }}</span></a>
