@@ -14,3 +14,5 @@ Artisan::command('revilo:marketing', function () {
 })->purpose('Process opted-in marketing and stock notifications');
 Schedule::command('revilo:expire')->everyMinute()->withoutOverlapping();
 Schedule::command('revilo:marketing')->everyFiveMinutes()->withoutOverlapping();
+
+Schedule::command('marketplaces:process')->everyMinute()->withoutOverlapping(10);

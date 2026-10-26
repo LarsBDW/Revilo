@@ -2,6 +2,7 @@
 
 return [
     'test_checkout' => env('TEST_CHECKOUT_ENABLED', false),
+    'public_preview' => env('PUBLIC_PREVIEW_ENABLED', false),
     'reservation_minutes' => 30,
     'standard_warranty_months' => 12,
     'extended_warranty_cents' => 3900,

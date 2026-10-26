@@ -122,8 +122,6 @@ class AdminController extends Controller
             if (ProductModel::where('slug', $d['slug'])->where('id', '!=', $id ?? 0)->exists()) {
                 throw ValidationException::withMessages(['slug' => 'Deze slug bestaat al']);
             }
-            $d['images'] = $record->images ?? [];
-            $d['specifications'] = $record->specifications ?? [];
         }
         if ($resource === 'inventory') {
             if (InventoryUnit::where('inventory_id', $d['inventory_id'])->where('id', '!=', $id ?? 0)->exists()) {
@@ -172,6 +170,10 @@ class AdminController extends Controller
                 }
                 $record->setRawAttributes($locked->getAttributes(), true);
             }
+            if ($resource === 'products') {
+                $d['images'] = $record->images ?? [];
+                $d['specifications'] = $record->specifications ?? [];
+            }
             $old = $record->status;
             $record->fill($d)->save();
             if ($resource === 'inventory' && $old !== $record->status) {
@@ -185,16 +187,77 @@ class AdminController extends Controller
     public function image(Request $r, string $resource, int $id)
     {
         abort_unless(in_array($resource, ['products', 'inventory']), 404);
-        $d = $r->validate(['image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120|dimensions:max_width=6000,max_height=6000']);
+        $r->validate(['image' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120|dimensions:max_width=6000,max_height=6000']);
         $class = $resource === 'products' ? ProductModel::class : InventoryUnit::class;
-        $record = $class::findOrFail($id);
+        $class::findOrFail($id);
         $path = $r->file('image')->store('photos', 'public');
-        $images = $record->images ?? [];
-        $images[] = Storage::url($path);
-        $record->update(['images' => $images]);
-        $this->audit('image.upload', $record->getTable(), $record->id);
+        try {
+            DB::transaction(function () use ($class, $id, $path) {
+                $record = $class::whereKey($id)->lockForUpdate()->firstOrFail();
+                $images = array_values($record->images ?? []);
+                $images[] = Storage::disk('public')->url($path);
+                $record->update(['images' => $images]);
+                $this->audit('image.upload', $record->getTable(), $record->id);
+            }, 5);
+        } catch (\Throwable $exception) {
+            Storage::disk('public')->delete($path);
+            throw $exception;
+        }
 
-        return back()->with('success', 'Foto toegevoegd');
+        return redirect()->route('admin.edit', ['resource' => $resource, 'id' => $id])->with('success', 'Foto toegevoegd');
+    }
+
+    public function removeImage(Request $r, string $resource, int $id)
+    {
+        abort_unless(in_array($resource, ['products', 'inventory'], true), 404);
+        $d = $r->validate(['image' => 'required|string|max:2048']);
+        $class = $resource === 'products' ? ProductModel::class : InventoryUnit::class;
+
+        DB::transaction(function () use ($class, $id, $d) {
+            $record = $class::whereKey($id)->lockForUpdate()->firstOrFail();
+            $images = array_values($record->images ?? []);
+            $index = array_search($d['image'], $images, true);
+            if ($index === false) {
+                throw ValidationException::withMessages(['image' => 'Deze afbeelding is al verwijderd of hoort niet bij dit product.']);
+            }
+            array_splice($images, $index, 1);
+            $record->update(['images' => $images]);
+            $this->audit('image.remove', $record->getTable(), $record->id);
+        }, 5);
+
+        $this->deleteUnusedImage($d['image']);
+
+        return redirect()->route('admin.edit', ['resource' => $resource, 'id' => $id])->with('success', 'Foto verwijderd');
+    }
+
+    private function deleteUnusedImage(string $image): void
+    {
+        $urlPath = parse_url($image, PHP_URL_PATH);
+        if (! is_string($urlPath) || ! preg_match('#^/storage/(photos/[A-Za-z0-9_-]+\.(?:jpe?g|png|webp))$#i', $urlPath, $matches)) {
+            return;
+        }
+
+        $disk = Storage::disk('public');
+        $path = $matches[1];
+        $urls = array_unique([$disk->url($path), '/storage/'.$path]);
+        if (! in_array($image, $urls, true)) {
+            return;
+        }
+
+        foreach ([ProductModel::class, InventoryUnit::class] as $class) {
+            if ($class::where(function ($query) use ($urls) {
+                foreach ($urls as $url) {
+                    $query->orWhereJsonContains('images', $url);
+                }
+            })->exists()) {
+                return;
+            }
+        }
+        if (OrderItem::whereIn('snapshot->image', $urls)->exists()) {
+            return;
+        }
+
+        $disk->delete($path);
     }
 
     public function tests(Request $r, int $id)

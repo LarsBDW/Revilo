@@ -275,4 +275,10 @@ return [
     'weight' => 'Weight',
     'ports' => 'Ports',
     'connectivity' => 'Connectivity',
+    'condition_C' => 'Visible wear',
+    'condition_B' => 'Good condition',
+    'condition_A' => 'Excellent condition',
+    'option_unavailable' => 'Unavailable',
+    'warranty_years' => ':years-year warranty',
+    'extra_options' => 'Extra options',
 ];

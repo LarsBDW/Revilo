@@ -1,0 +1,127 @@
+name: revilo
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-app: &app
+  image: revilo/app:oracle
+  build:
+    context: ../..
+    dockerfile: deploy/oracle/Dockerfile
+    target: app
+  restart: unless-stopped
+  logging: *logging
+  environment: &environment
+    APP_NAME: Revilo
+    APP_ENV: production
+    APP_DEBUG: "false"
+    APP_KEY: ${APP_KEY:?Run init-env.sh first}
+    APP_URL: https://${REVILO_DOMAIN:?Set the public hostname}
+    APP_LOCALE: nl
+    APP_FALLBACK_LOCALE: nl
+    DB_CONNECTION: mysql
+    DB_HOST: db
+    DB_PORT: "3306"
+    DB_DATABASE: revilo
+    DB_USERNAME: revilo
+    DB_PASSWORD: ${DB_PASSWORD:?Run init-env.sh first}
+    SESSION_DRIVER: database
+    SESSION_ENCRYPT: "true"
+    SESSION_SECURE_COOKIE: "true"
+    SESSION_SAME_SITE: lax
+    CACHE_STORE: database
+    QUEUE_CONNECTION: database
+    DB_QUEUE_RETRY_AFTER: "90"
+    FILESYSTEM_DISK: local
+    LOG_CHANNEL: stderr
+    LOG_LEVEL: info
+    TEST_CHECKOUT_ENABLED: "false"
+    PUBLIC_PREVIEW_ENABLED: ${PUBLIC_PREVIEW_ENABLED:-true}
+    MAIL_MAILER: log
+    MAIL_FROM_ADDRESS: preview@example.test
+    MAIL_FROM_NAME: Revilo
+    GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+    GOOGLE_REDIRECT_URI: https://${REVILO_DOMAIN}/auth/google/callback
+    SHOP_CONTACT_EMAIL: ${SHOP_CONTACT_EMAIL:-}
+  volumes:
+    - storage:/var/www/html/storage
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    mem_limit: 1g
+    logging: *logging
+    environment:
+      MYSQL_DATABASE: revilo
+      MYSQL_USER: revilo
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Run init-env.sh first}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?Run init-env.sh first}
+    command: ["--innodb-buffer-pool-size=256M", "--max-connections=60"]
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql -u\"$$MYSQL_USER\" -D\"$$MYSQL_DATABASE\" -e 'SELECT 1' >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+  app:
+    <<: *app
+    mem_limit: 512m
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(@fsockopen('127.0.0.1', 9000) === false ? 1 : 0);"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+  worker:
+    <<: *app
+    mem_limit: 256m
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=60", "--max-time=3600", "--no-ansi"]
+    stop_grace_period: 90s
+  scheduler:
+    <<: *app
+    mem_limit: 256m
+    command: ["php", "artisan", "schedule:work", "--no-ansi"]
+    stop_grace_period: 90s
+  web:
+    image: revilo/web:oracle
+    build:
+      context: ../..
+      dockerfile: deploy/oracle/Dockerfile
+      target: web
+    restart: unless-stopped
+    mem_limit: 128m
+    logging: *logging
+    environment:
+      REVILO_DOMAIN: ${REVILO_DOMAIN:?Set the public hostname}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - storage:/var/www/html/storage:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mysql:
+  storage:
+  caddy_data:
+  caddy_config:

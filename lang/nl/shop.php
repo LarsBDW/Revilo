@@ -275,4 +275,10 @@ return [
     'weight' => 'Gewicht',
     'ports' => 'Aansluitingen',
     'connectivity' => 'Connectiviteit',
+    'condition_C' => 'Zichtbaar gebruikt',
+    'condition_B' => 'Goede staat',
+    'condition_A' => 'Zeer goede staat',
+    'option_unavailable' => 'Niet beschikbaar',
+    'warranty_years' => ':years jaar garantie',
+    'extra_options' => 'Extra opties',
 ];

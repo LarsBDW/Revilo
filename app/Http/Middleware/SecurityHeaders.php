@@ -14,6 +14,9 @@ class SecurityHeaders
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+        if (config('revilo.public_preview')) {
+            $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
+        }
         if ($request->is('admin*') || $request->is('*/account*') || $request->is('*/orders*') || $request->is('auth/google*') || $request->is('*/login') || $request->is('*/register*')) {
             $response->headers->set('Cache-Control', 'private, no-store');
         }

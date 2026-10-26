@@ -1,0 +1,20 @@
+{$REVILO_DOMAIN} {
+    root * /var/www/html/public
+    encode zstd gzip
+    @private path /.env* /.git/* /storage/private/*
+    respond @private 404
+    php_fastcgi app:9000
+    file_server
+}
+
+# Internal readiness endpoint; this port is not published on the server.
+http://:8080 {
+    bind 127.0.0.1
+    root * /var/www/html/public
+    handle /up {
+        php_fastcgi app:9000
+    }
+    handle {
+        respond 404
+    }
+}

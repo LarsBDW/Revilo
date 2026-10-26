@@ -29,3 +29,12 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/deploy/oracle/.env
+/deploy/oracle/.env.*
+!/deploy/oracle/.env.example
+/deploy/oracle/backups/
+/dist/
+/deploy/alwaysdata/.env
+/deploy/alwaysdata/.env.*
+!/deploy/alwaysdata/.env.example
+/deploy/alwaysdata/backups/

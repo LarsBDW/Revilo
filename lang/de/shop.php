@@ -275,4 +275,10 @@ return [
     'weight' => 'Gewicht',
     'ports' => 'Anschlüsse',
     'connectivity' => 'Verbindungen',
+    'condition_C' => 'Sichtbare Gebrauchsspuren',
+    'condition_B' => 'Guter Zustand',
+    'condition_A' => 'Sehr guter Zustand',
+    'option_unavailable' => 'Nicht verfügbar',
+    'warranty_years' => ':years Jahre Garantie',
+    'extra_options' => 'Zusätzliche Optionen',
 ];

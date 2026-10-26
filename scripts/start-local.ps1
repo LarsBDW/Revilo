@@ -26,6 +26,22 @@ if(-not (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction Silent
     $serverProcess = Start-Process -FilePath $phpPath -ArgumentList @(('"'+(Join-Path $projectRoot 'artisan')+'"'),'serve','--host=127.0.0.1',("--port="+$Port),'--no-ansi') -WorkingDirectory $projectRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $runtimeDir 'web.stdout.log') -RedirectStandardError (Join-Path $runtimeDir 'web.stderr.log')
     $serverProcess.Id | Set-Content -LiteralPath (Join-Path $runtimeDir 'web.pid')
 }
+$websiteReady = $false
+$websiteDeadline = [DateTime]::UtcNow.AddSeconds(20)
+while ([DateTime]::UtcNow -lt $websiteDeadline) {
+    try {
+        $websiteResponse = Invoke-WebRequest -Uri ("http://127.0.0.1:" + $Port + "/nl/login") -UseBasicParsing -TimeoutSec 2
+        if ($websiteResponse.StatusCode -eq 200) {
+            $websiteReady = $true
+            break
+        }
+    } catch {
+        Start-Sleep -Milliseconds 250
+    }
+}
+if (-not $websiteReady) {
+    throw 'The webshop did not become ready. See .runtime/web.stdout.log and .runtime/web.stderr.log.'
+}
 $schedulerPidPath = Join-Path $runtimeDir 'scheduler.pid'
 $schedulerRunning = $false
 if(Test-Path -LiteralPath $schedulerPidPath){$savedSchedulerPid=[int](Get-Content -LiteralPath $schedulerPidPath);$schedulerRunning=[bool](Get-Process -Id $savedSchedulerPid -ErrorAction SilentlyContinue)}

@@ -142,6 +142,31 @@ class CatalogService
         return $result;
     }
 
+    public function optionPrices(ProductModel $model, array $configuration): array
+    {
+        $units = $model->units()->where('status', 'available')->get();
+        foreach ($units as $unit) {
+            $unit->setRelation('model', $model);
+        }
+        $fields = ['grade' => ['C', 'B', 'A'], 'ssd_gb' => $model->supported_ssd, 'ram_gb' => $model->supported_ram, 'warranty_months' => [12, 24], 'battery' => ['standard', 'new'], 'charger' => ['included', 'extra']];
+        $result = [];
+        foreach ($fields as $field => $values) {
+            $prices = [];
+            foreach ($values as $value) {
+                $selected = array_merge($configuration, [$field => $value]);
+                $plans = $units->map(fn ($unit) => $this->candidate($unit, $selected, $this->components()))->filter();
+                $prices[(string) $value] = $plans->isEmpty() ? null : $plans->min('price_cents');
+            }
+            $available = array_filter($prices, fn ($price) => $price !== null);
+            $base = $available ? min($available) : 0;
+            foreach ($prices as $value => $price) {
+                $result[$field][$value] = ['available' => $price !== null, 'price_cents' => $price, 'extra_cents' => $price === null ? null : $price - $base];
+            }
+        }
+
+        return $result;
+    }
+
     public function defaultConfiguration(ProductModel $model): ?array
     {
         $unit = $model->units->where('status', 'available')->sortBy('selling_cents')->first();

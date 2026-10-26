@@ -1,0 +1,306 @@
+.revilo-relay *{ box-sizing: border-box; }
+.revilo-relay button,.revilo-relay input,.revilo-relay select,.revilo-relay textarea{ font: inherit; }
+.revilo-relay button,.revilo-relay a,.revilo-relay input,.revilo-relay select,.revilo-relay textarea{ outline-offset: 4px; }
+.revilo-relay button{ cursor: pointer; }
+.revilo-relay a{ color: var(--green); text-decoration: none; }
+.revilo-relay button{ transition: background 0.15s, transform 0.15s; }
+.revilo-relay button:disabled{ opacity: 0.5; cursor: wait; }
+.revilo-relay .hidden{ display: none !important; }
+.revilo-relay .workspace{ display: flex; min-height: 100vh; }
+.revilo-relay .sidebar{ width: 245px; flex-shrink: 0; background: rgb(18, 43, 37); color: rgb(220, 231, 223); padding: 34px 21px 22px; display: flex; flex-direction: column; position: fixed; inset: 0px auto 0px 0px; }
+.revilo-relay .brand{ display: flex; align-items: center; gap: 11px; font-size: 33px; font-weight: 800; letter-spacing: -2px; color: rgb(243, 249, 245); }
+.revilo-relay .brand > span{ font-size: 28px; letter-spacing: -1.5px; }
+.revilo-relay .brand > i{ width: 7px; height: 7px; border-radius: 50%; background: rgb(162, 223, 185); margin: 14px 0px 0px -7px; }
+.revilo-relay .workspace-name{ display: flex; align-items: center; gap: 10px; border: 1px solid rgb(56, 80, 71); border-radius: 9px; margin: 34px 0px 33px; padding: 12px 9px; font-size: 11px; font-weight: 600; }
+.revilo-relay .workspace-name > div{ flex: 1 1 0%; }
+.revilo-relay .workspace-name small{ display: block; font-size: 9px; color: rgb(147, 170, 160); margin-top: 5px; font-weight: 400; }
+.revilo-relay .avatar{ display: grid; place-items: center; width: 30px; height: 30px; background: rgb(220, 234, 222); color: rgb(32, 74, 60); border: 1px solid rgb(200, 217, 205); border-radius: 50%; font-size: 11px; font-weight: 700; }
+.revilo-relay .nav-label{ font-size: 9px; letter-spacing: 1.8px; color: rgb(133, 157, 145); margin: 0px 13px 11px; }
+.revilo-relay .sidebar nav{ display: grid; gap: 5px; }
+.revilo-relay .sidebar nav button{ border: 0px; background: transparent; color: rgb(169, 188, 178); padding: 13px; display: flex; align-items: center; gap: 12px; text-align: left; border-radius: 7px; font-size: 12px; }
+.revilo-relay .sidebar nav button > span{ font-size: 19px; width: 19px; text-align: center; }
+.revilo-relay .sidebar nav button.active{ background: rgb(41, 71, 58); color: rgb(242, 255, 247); }
+.revilo-relay .sidebar nav button b{ font-size: 10px; font-weight: 500; background: rgb(72, 100, 82); padding: 3px 6px; margin-left: auto; border-radius: 4px; }
+.revilo-relay .sidebar nav button b:empty{ display: none; }
+.revilo-relay .sidebar nav button:hover{ background: rgb(41, 71, 58); }
+.revilo-relay .sidebar-bottom{ margin-top: auto; padding-top: 40px; }
+.revilo-relay .side-note{ border: 1px solid rgb(56, 80, 71); padding: 14px 12px; border-radius: 8px; font-size: 10px; line-height: 1.6; }
+.revilo-relay .side-note p{ color: rgb(150, 173, 161); font-size: 10px; margin: 9px 0px 0px; }
+.revilo-relay .small-dot,.revilo-relay .storage-indicator i{ display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: rgb(138, 204, 157); margin-right: 6px; }
+.revilo-relay .export,.revilo-relay #logout{ display: block; font-size: 11px; color: rgb(165, 185, 173); margin: 20px 10px 0px; }
+.revilo-relay #logout{ background: transparent; border: 0px; padding: 0px; }
+.revilo-relay .main-shell{ margin-left: 245px; flex: 1 1 0%; min-width: 0px; }
+.revilo-relay .topbar{ height: 76px; background: rgb(255, 255, 255); border-bottom: 1px solid var(--border); padding: 0px 42px; display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: rgb(133, 145, 138); }
+.revilo-relay .topbar b{ font-weight: 500; color: rgb(83, 100, 91); }
+.revilo-relay .topbar i{ font-style: normal; margin: 0px 15px; color: rgb(180, 190, 184); }
+.revilo-relay .top-right{ display: flex; gap: 24px; align-items: center; }
+.revilo-relay .storage-indicator{ font-size: 10px; }
+.revilo-relay .topbar .storage-indicator i{ margin-right: 5px; background: rgb(69, 155, 115); }
+.revilo-relay main{ max-width: 1500px; margin: auto; padding: 38px 42px 45px; }
+.revilo-relay .eyebrow{ font-size: 9px; font-weight: 700; letter-spacing: 2px; color: rgb(124, 145, 134); }
+.revilo-relay .page-heading{ display: flex; justify-content: space-between; align-items: center; margin: 10px 0px 27px; gap: 16px; }
+.revilo-relay h1{ font-size: 32px; letter-spacing: -1.1px; line-height: 1.15; margin: 9px 0px 10px; font-weight: 650; }
+.revilo-relay h2{ font-size: 21px; letter-spacing: -0.5px; margin: 8px 0px 12px; }
+.revilo-relay h3{ font-size: 14px; line-height: 1.45; margin: 0px; }
+.revilo-relay p{ font-size: 12px; line-height: 1.7; color: rgb(118, 133, 124); margin: 0px; }
+.revilo-relay .heading-actions{ display: flex; gap: 9px; flex-wrap: wrap; }
+.revilo-relay .btn{ border: 1px solid rgb(217, 226, 220); padding: 11px 15px; border-radius: 7px; background: rgb(255, 255, 255); color: rgb(51, 78, 62); font-weight: 600; font-size: 11px; display: inline-flex; align-items: center; gap: 9px; justify-content: center; }
+.revilo-relay .btn:hover{ background: rgb(237, 244, 238); }
+.revilo-relay .btn.primary{ background: rgb(28, 99, 73); color: white; border-color: rgb(28, 99, 73); }
+.revilo-relay .btn.primary:hover{ background: rgb(18, 78, 56); }
+.revilo-relay .btn.danger{ color: rgb(173, 68, 65); }
+.revilo-relay .btn.small{ font-size: 10px; padding: 8px 11px; }
+.revilo-relay .stats{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 27px 0px; }
+.revilo-relay .stat{ background: rgb(255, 255, 255); border: 1px solid var(--border); border-radius: 9px; padding: 19px 20px; position: relative; }
+.revilo-relay .stat-top{ font-size: 10px; color: rgb(125, 138, 130); display: flex; justify-content: space-between; align-items: center; }
+.revilo-relay .stat-top i{ font-style: normal; color: rgb(146, 163, 153); font-size: 16px; }
+.revilo-relay .stat-value{ font-size: 29px; letter-spacing: -1px; margin: 10px 0px 6px; font-weight: 600; color: rgb(33, 60, 46); }
+.revilo-relay .stat small{ font-size: 9px; color: rgb(154, 165, 157); }
+.revilo-relay .stat.accent{ background: rgb(234, 244, 237); border-color: rgb(213, 230, 217); }
+.revilo-relay .channel-strip{ background: rgb(255, 255, 255); display: flex; align-items: center; gap: 15px; padding: 14px 19px; border: 1px solid var(--border); border-radius: 8px; margin: 0px 0px 30px; font-size: 10px; color: rgb(133, 144, 135); }
+.revilo-relay .channel-strip strong{ font-size: 10px; font-weight: 500; color: rgb(102, 121, 109); white-space: nowrap; }
+.revilo-relay .channel-chips{ display: flex; gap: 17px; align-items: center; flex-wrap: wrap; }
+.revilo-relay .channel-chip{ display: flex; align-items: center; gap: 7px; font-size: 9px; color: rgb(125, 138, 128); }
+.revilo-relay .channel-chip .mini-logo{ width: 22px; height: 22px; font-size: 9px; }
+.revilo-relay .channel-strip > a{ margin-left: auto; white-space: nowrap; font-size: 10px; }
+.revilo-relay .mini-logo,.revilo-relay .channel-logo{ background: rgb(240, 243, 237); color: rgb(59, 104, 73); border: 1px solid rgb(226, 232, 220); display: inline-grid; place-items: center; border-radius: 5px; font-weight: 750; font-size: 14px; width: 35px; height: 35px; letter-spacing: -0.5px; flex-shrink: 0; }
+.revilo-relay .logo-ebay{ color: rgb(53, 100, 173); background: rgb(237, 243, 255); border-color: rgb(228, 235, 248); }
+.revilo-relay .logo-marktplaats{ color: rgb(199, 135, 41); background: rgb(255, 244, 224); border-color: rgb(245, 230, 200); }
+.revilo-relay .logo-belgium{ color: rgb(21, 121, 97); background: rgb(234, 244, 231); }
+.revilo-relay .logo-facebook{ color: rgb(36, 120, 222); background: rgb(237, 244, 253); }
+.revilo-relay .logo-tweakers{ color: rgb(169, 49, 58); background: rgb(250, 237, 237); }
+.revilo-relay .section-title{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 17px; }
+.revilo-relay .section-title h2{ font-size: 16px; margin: 0px; letter-spacing: -0.3px; }
+.revilo-relay .section-title h2 span{ font-size: 10px; font-weight: 500; color: rgb(125, 145, 130); background: rgb(232, 238, 232); border-radius: 5px; padding: 3px 7px; margin-left: 7px; }
+.revilo-relay .filters{ display: flex; gap: 9px; }
+.revilo-relay .search{ position: relative; }
+.revilo-relay .search::before{ content: "⌕"; position: absolute; left: 11px; top: 5px; font-size: 23px; color: rgb(145, 161, 151); }
+.revilo-relay .search input{ padding: 10px 12px 10px 34px; width: 220px; font-size: 10px; }
+.revilo-relay .filters select{ font-size: 10px; padding: 9px 12px; background: rgb(255, 255, 255); }
+.revilo-relay .filters input,.revilo-relay .filters select{ border: 1px solid var(--border); border-radius: 6px; color: rgb(75, 98, 84); }
+.revilo-relay input,.revilo-relay select,.revilo-relay textarea{ width: 100%; border: 1px solid rgb(220, 228, 222); background: rgb(255, 255, 255); border-radius: 6px; padding: 11px 12px; font-size: 12px; color: rgb(37, 63, 48); }
+.revilo-relay input:focus,.revilo-relay textarea:focus,.revilo-relay select:focus{ outline: rgb(180, 212, 191) solid 2px; border-color: rgb(115, 169, 138); }
+.revilo-relay textarea{ resize: vertical; line-height: 1.7; min-height: 125px; }
+.revilo-relay .product-grid{ display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 20px; }
+.revilo-relay .product-card{ background: rgb(255, 255, 255); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; position: relative; }
+.revilo-relay .product-card:hover{ box-shadow: rgba(18, 49, 35, 0.04) 0px 7px 20px; transform: translateY(-2px); }
+.revilo-relay .product-photo{ height: 172px; background: rgb(239, 242, 237); position: relative; display: grid; place-items: center; overflow: hidden; }
+.revilo-relay .product-photo > img{ width: 100%; height: 100%; object-fit: cover; }
+.revilo-relay .photo-label{ position: absolute; bottom: 10px; left: 12px; font-size: 8px; letter-spacing: 0.5px; color: rgb(141, 156, 144); background: rgba(255, 255, 255, 0.79); border-radius: 4px; padding: 4px 6px; }
+.revilo-relay .card-status{ position: absolute; z-index: 1; top: 11px; left: 11px; }
+.revilo-relay .pill{ display: inline-flex; align-items: center; gap: 5px; font-size: 9px; padding: 5px 8px; border-radius: 4px; background: rgb(245, 247, 244); color: rgb(116, 133, 121); border: 1px solid rgb(229, 234, 228); font-weight: 500; white-space: nowrap; }
+.revilo-relay .pill.live,.revilo-relay .pill.completed{ background: rgb(230, 242, 230); color: rgb(54, 113, 75); border-color: rgb(210, 229, 211); }
+.revilo-relay .pill.error,.revilo-relay .pill.attention,.revilo-relay .pill.unknown,.revilo-relay .pill.interrupted{ background: rgb(255, 240, 234); color: rgb(177, 93, 63); border-color: rgb(246, 219, 206); }
+.revilo-relay .pill.pending,.revilo-relay .pill.queued,.revilo-relay .pill.running{ background: rgb(255, 248, 223); color: rgb(142, 121, 45); border-color: rgb(238, 228, 198); }
+.revilo-relay .pill.manual,.revilo-relay .pill.restricted{ background: rgb(240, 237, 248); color: rgb(117, 97, 140); border-color: rgb(232, 224, 239); }
+.revilo-relay .pill.sold{ background: rgb(228, 234, 230); color: rgb(100, 118, 106); }
+.revilo-relay .product-body{ padding: 17px 17px 14px; }
+.revilo-relay .product-body h3{ font-size: 12px; min-height: 36px; font-weight: 600; color: rgb(36, 62, 45); padding-right: 13px; }
+.revilo-relay .card-meta{ font-size: 9px; color: rgb(148, 160, 149); margin: 7px 0px 17px; }
+.revilo-relay .card-price{ font-size: 20px; font-weight: 600; letter-spacing: -0.5px; color: rgb(41, 78, 54); }
+.revilo-relay .card-price.unset{ font-size: 13px; color: rgb(149, 162, 149); font-weight: 400; letter-spacing: 0px; }
+.revilo-relay .card-bottom{ display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgb(237, 241, 235); padding-top: 12px; margin-top: 15px; }
+.revilo-relay .card-bottom .mini-logo{ width: 20px; height: 20px; font-size: 8px; border-radius: 4px; margin-right: 3px; }
+.revilo-relay .card-bottom button{ border: 0px; background: none; color: rgb(72, 113, 79); font-size: 10px; font-weight: 600; padding: 3px; }
+.revilo-relay .laptop{ width: 148px; transform: perspective(500px) rotateY(-12deg) rotateX(4deg); filter: drop-shadow(rgba(86, 100, 74, 0.15) 12px 13px 7px); }
+.revilo-relay .laptop-screen{ height: 90px; background: linear-gradient(145deg, rgb(183, 200, 193), rgb(232, 232, 199) 55%, rgb(93, 141, 130)); border: 5px solid rgb(45, 57, 54); border-radius: 5px 5px 2px 2px; display: grid; place-items: center; position: relative; overflow: hidden; }
+.revilo-relay .laptop-screen::before{ content: ""; position: absolute; width: 130px; height: 100px; border-radius: 60%; background: rgba(185, 193, 221, 0.44); transform: rotate(-40deg); left: 10px; top: -30px; }
+.revilo-relay .laptop-screen span{ font-size: 15px; font-weight: 400; letter-spacing: 1px; z-index: 1; color: rgba(255, 255, 255, 0.6); }
+.revilo-relay .laptop-base{ height: 8px; background: linear-gradient(rgb(195, 200, 197), rgb(147, 158, 152)); border-radius: 1px 1px 10px 10px; margin: 0px -11px; }
+.revilo-relay .product-card:nth-child(3n+2) .laptop-screen{ background: linear-gradient(130deg, rgb(102, 125, 134), rgb(175, 186, 191) 40%, rgb(212, 217, 203)); }
+.revilo-relay .product-card:nth-child(3n) .laptop-screen{ background: linear-gradient(130deg, rgb(130, 115, 133), rgb(175, 168, 188) 40%, rgb(217, 208, 195)); }
+.revilo-relay .empty{ grid-column: 1 / -1; text-align: center; padding: 65px 20px; background: rgb(255, 255, 255); border: 1px dashed rgb(217, 227, 217); border-radius: 10px; }
+.revilo-relay .empty h2{ font-size: 20px; }
+.revilo-relay .empty .empty-symbol{ font-size: 40px; color: rgb(123, 161, 139); }
+.revilo-relay .empty .btn{ margin-top: 20px; }
+.revilo-relay .channels-grid{ display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 18px; }
+.revilo-relay .connection-card{ background: white; border: 1px solid var(--border); border-radius: 10px; padding: 23px; display: flex; flex-direction: column; gap: 17px; }
+.revilo-relay .connection-card .card-head{ display: flex; align-items: center; gap: 12px; }
+.revilo-relay .connection-card .card-head .pill{ margin-left: auto; }
+.revilo-relay .connection-card p{ min-height: 42px; font-size: 11px; }
+.revilo-relay .connection-card .btn{ align-self: flex-start; }
+.revilo-relay .info-banner{ padding: 17px 20px; border: 1px solid rgb(223, 223, 205); background: rgb(246, 245, 233); border-radius: 8px; font-size: 11px; color: rgb(130, 124, 85); line-height: 1.7; margin-bottom: 23px; }
+.revilo-relay .info-banner.mint{ background: rgb(233, 244, 237); color: rgb(84, 123, 94); border-color: rgb(213, 232, 220); }
+.revilo-relay .activity-list{ display: grid; gap: 14px; }
+.revilo-relay .activity-item{ border: 1px solid var(--border); border-radius: 9px; padding: 20px; background: rgb(255, 255, 255); }
+.revilo-relay .activity-top{ display: flex; gap: 15px; align-items: center; justify-content: space-between; }
+.revilo-relay .activity-top h3{ font-size: 12px; }
+.revilo-relay .activity-top time{ color: rgb(154, 164, 158); font-size: 10px; }
+.revilo-relay .activity-results{ margin-top: 14px; display: grid; gap: 8px; }
+.revilo-relay .activity-result{ display: flex; align-items: flex-start; gap: 9px; font-size: 10px; line-height: 1.7; color: rgb(114, 131, 118); }
+.revilo-relay .activity-result strong{ min-width: 125px; color: rgb(72, 99, 78); font-size: 10px; }
+.revilo-relay .guide{ max-width: 900px; display: grid; gap: 18px; }
+.revilo-relay .guide section{ background: rgb(255, 255, 255); border: 1px solid var(--border); border-radius: 9px; padding: 25px; }
+.revilo-relay .guide h2{ font-size: 18px; }
+.revilo-relay .guide ol,.revilo-relay .guide ul{ font-size: 12px; line-height: 1.9; color: rgb(110, 129, 113); padding-left: 20px; }
+.revilo-relay .guide li{ margin-bottom: 8px; }
+.revilo-relay .guide code{ background: rgb(240, 244, 239); border-radius: 4px; padding: 2px 4px; font-size: 11px; color: rgb(57, 94, 64); }
+.revilo-relay .guide a{ text-decoration: underline; }
+.revilo-relay footer{ border-top: 1px solid var(--border); padding: 20px 42px; color: rgb(147, 161, 148); font-size: 9px; display: flex; gap: 20px; align-items: center; letter-spacing: 1px; }
+.revilo-relay footer > span{ letter-spacing: 0px; }
+.revilo-relay footer > span:last-child{ margin-left: auto; }
+.revilo-relay dialog{ border: 0px; padding: 0px; border-radius: 12px; box-shadow: rgba(13, 40, 25, 0.28) 0px 20px 90px; color: rgb(36, 62, 43); background: rgb(255, 255, 255); max-height: 94vh; }
+.revilo-relay dialog::backdrop{ background: rgba(16, 37, 30, 0.533); backdrop-filter: blur(3px); }
+.revilo-relay dialog.editor{ width: min(1060px, 95vw); }
+.revilo-relay dialog.connection{ width: min(720px, 95vw); }
+.revilo-relay .dialog-head{ padding: 24px 29px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.revilo-relay .dialog-head h2{ font-size: 21px; margin: 5px 0px; }
+.revilo-relay .close-dialog{ border: 0px; background: rgb(242, 245, 241); border-radius: 50%; height: 30px; width: 30px; color: rgb(98, 120, 101); font-size: 20px; }
+.revilo-relay .editor-columns{ display: grid; grid-template-columns: minmax(0px, 1fr) 285px; }
+.revilo-relay .editor-main{ padding: 25px 29px; }
+.revilo-relay .editor-side{ background: rgb(248, 250, 247); border-left: 1px solid var(--border); padding: 26px 23px; }
+.revilo-relay .editor-side h3{ font-size: 11px; letter-spacing: 0.8px; margin-bottom: 17px; }
+.revilo-relay .editor-side > p{ font-size: 10px; margin: 13px 0px; }
+.revilo-relay label{ display: block; font-size: 11px; font-weight: 600; margin-bottom: 17px; color: rgb(73, 99, 77); }
+.revilo-relay label input,.revilo-relay label select,.revilo-relay label textarea{ display: block; margin-top: 7px; font-weight: 400; }
+.revilo-relay label small{ display: block; font-size: 9px; color: rgb(141, 156, 142); margin-top: 5px; font-weight: 400; }
+.revilo-relay .field-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.revilo-relay .field-row > label{ min-width: 0px; }
+.revilo-relay .upload-zone{ border: 1px dashed rgb(182, 203, 182); background: rgb(244, 248, 241); border-radius: 8px; padding: 20px; text-align: center; font-size: 11px; color: rgb(111, 138, 112); font-weight: 500; cursor: pointer; }
+.revilo-relay .upload-zone input{ display: none; }
+.revilo-relay .upload-zone span{ display: block; font-size: 24px; margin-bottom: 7px; }
+.revilo-relay .upload-zone small{ font-size: 9px; font-weight: 400; color: rgb(154, 170, 152); }
+.revilo-relay .photo-list{ display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0px 20px; }
+.revilo-relay .photo-thumb{ position: relative; width: 76px; height: 65px; }
+.revilo-relay .photo-thumb img{ width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+.revilo-relay .photo-thumb button{ position: absolute; right: -4px; top: -5px; border: 1px solid rgb(220, 228, 217); background: white; border-radius: 50%; height: 18px; width: 18px; padding: 0px; font-size: 12px; }
+.revilo-relay .channel-option{ border-bottom: 1px solid rgb(229, 236, 225); padding: 11px 0px; }
+.revilo-relay .channel-option label{ display: flex; align-items: center; gap: 8px; font-size: 10px; margin: 0px; }
+.revilo-relay .channel-option input{ width: 13px; height: 13px; margin: 0px; accent-color: rgb(40, 115, 78); }
+.revilo-relay .channel-option .mini-logo{ width: 22px; height: 22px; font-size: 9px; }
+.revilo-relay .channel-option .pill{ font-size: 8px; margin: 7px 0px 0px 23px; padding: 4px 6px; }
+.revilo-relay .channel-option p{ font-size: 9px; line-height: 1.6; margin: 7px 0px 0px 23px; overflow-wrap: anywhere; }
+.revilo-relay .dialog-footer{ border-top: 1px solid var(--border); padding: 18px 29px; display: flex; gap: 8px; justify-content: flex-end; position: sticky; bottom: 0px; background: white; z-index: 5; }
+.revilo-relay .dialog-footer .left{ margin-right: auto; }
+.revilo-relay .form-error{ font-size: 11px; color: rgb(173, 77, 67); line-height: 1.6; margin: 10px 0px; white-space: pre-line; }
+.revilo-relay .connection-body{ padding: 24px 29px; }
+.revilo-relay .connection-body .info-banner{ font-size: 10px; }
+.revilo-relay .lookup{ border-top: 1px solid var(--border); padding-top: 20px; margin-top: 25px; }
+.revilo-relay .lookup h3{ margin-bottom: 12px; }
+.revilo-relay pre{ font-size: 10px; line-height: 1.7; background: rgb(244, 247, 242); border: 1px solid rgb(225, 233, 220); border-radius: 6px; overflow: auto; max-height: 270px; padding: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.revilo-relay .check-label{ display: flex; gap: 8px; align-items: center; font-size: 11px; }
+.revilo-relay .check-label input{ width: 14px; height: 14px; margin: 0px; accent-color: rgb(38, 118, 77); }
+.revilo-relay details{ border: 1px solid var(--border); border-radius: 7px; margin: 18px 0px; background: rgb(255, 255, 255); }
+.revilo-relay summary{ padding: 13px; font-size: 11px; color: rgb(91, 118, 93); cursor: pointer; }
+.revilo-relay .details-content{ padding: 4px 14px 14px; }
+.revilo-relay .details-content p{ font-size: 10px; margin-bottom: 15px; }
+.revilo-relay .mono{ font-family: Consolas, monospace; font-size: 10px; }
+.revilo-relay .subtle-action{ font-size: 10px; color: rgb(111, 136, 113); margin: 16px 0px; border: 0px; background: transparent; padding: 0px; display: block; }
+.revilo-relay .editor-side .btn{ width: 100%; margin-top: 8px; }
+.revilo-relay .editor-side a.btn{ color: rgb(66, 110, 73); }
+.revilo-relay .login{ display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; background: rgb(255, 255, 255); }
+.revilo-relay .login-story{ background: rgb(18, 46, 37); padding: 45px 60px; color: rgb(239, 246, 236); display: flex; flex-direction: column; justify-content: space-between; }
+.revilo-relay .login-story h1{ font-size: 49px; line-height: 1.15; letter-spacing: -1.7px; margin: 22px 0px; }
+.revilo-relay .login-story p{ max-width: 350px; color: rgb(161, 185, 166); font-size: 13px; line-height: 1.9; }
+.revilo-relay .login-story .eyebrow{ color: rgb(142, 185, 155); }
+.revilo-relay .login-story small{ font-size: 10px; color: rgb(117, 151, 129); }
+.revilo-relay .login-orbit{ display: flex; align-items: center; gap: 15px; margin: 35px 0px; color: rgb(140, 173, 146); font-size: 10px; }
+.revilo-relay .login-orbit span{ border: 1px solid rgb(66, 101, 77); border-radius: 6px; padding: 10px 14px; }
+.revilo-relay .login-orbit b{ font-size: 17px; font-weight: 400; }
+.revilo-relay .login-form{ display: grid; place-items: center; padding: 40px; }
+.revilo-relay .login-form form{ width: 330px; max-width: 100%; }
+.revilo-relay .login-form h2{ font-size: 30px; margin: 16px 0px; }
+.revilo-relay .login-form p{ margin-bottom: 30px; }
+.revilo-relay .login-form .btn{ width: 100%; justify-content: space-between; }
+.revilo-relay .login-form small{ display: block; font-size: 10px; color: rgb(152, 162, 149); line-height: 1.8; margin-top: 20px; }
+.revilo-relay .login-form label{ font-size: 11px; }
+.revilo-relay .initial-loading{ position: fixed; inset: 0px; background: rgb(246, 249, 244); display: flex; align-items: center; justify-content: center; flex-direction: column; font-weight: 800; font-size: 45px; color: rgb(41, 87, 58); letter-spacing: -3px; z-index: 99; }
+.revilo-relay .initial-loading span{ font-size: 12px; font-weight: 400; color: rgb(148, 163, 143); letter-spacing: 0px; margin-top: 15px; }
+.revilo-relay #toast{ position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(120px); background: rgb(30, 68, 48); color: rgb(246, 255, 242); padding: 13px 20px; border-radius: 8px; box-shadow: rgba(22, 62, 37, 0.15) 0px 6px 22px; font-size: 12px; z-index: 200; transition: transform 0.2s; max-width: 90vw; }
+.revilo-relay #toast.show{ transform: translateX(-50%) translateY(0px); }
+.revilo-relay .connection-warning{ font-size: 10px; color: rgb(152, 123, 70); line-height: 1.8; }
+.revilo-relay .channel-option .outdated{ color: rgb(173, 123, 57); }
+.revilo-relay .activity-error{ font-size: 11px; color: rgb(177, 93, 63); margin-top: 12px; }
+@media (min-width: 1550px){.revilo-relay .product-grid{ grid-template-columns: repeat(4, minmax(0px, 1fr)); }
+.revilo-relay .product-photo{ height: 185px; }}
+@media (max-width: 1150px){.revilo-relay .sidebar{ width: 205px; padding: 28px 16px; }
+.revilo-relay .main-shell{ margin-left: 205px; }
+.revilo-relay .topbar{ padding: 0px 26px; }
+.revilo-relay main{ padding: 30px 26px; }
+.revilo-relay .channel-chips{ gap: 9px; }
+.revilo-relay .channel-chip{ font-size: 0px; }
+.revilo-relay .product-grid{ gap: 14px; }
+.revilo-relay .product-body{ padding: 13px; }
+.revilo-relay .heading-actions{ justify-content: flex-end; }
+.revilo-relay .stats{ gap: 10px; }
+.revilo-relay .stat{ padding: 16px; }
+.revilo-relay .page-heading h1{ font-size: 29px; }}
+@media (max-width: 900px){.revilo-relay .product-grid{ grid-template-columns: repeat(2, minmax(0px, 1fr)); }
+.revilo-relay .channel-strip{ gap: 10px; }
+.revilo-relay .editor-columns{ grid-template-columns: 1fr; }
+.revilo-relay .editor-side{ border-left: 0px; border-top: 1px solid var(--border); }
+.revilo-relay .editor-side .channel-options{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.revilo-relay .editor-side .channel-option{ border: 1px solid var(--border); padding: 10px; border-radius: 6px; }
+.revilo-relay .stats{ grid-template-columns: repeat(2, 1fr); }
+.revilo-relay .section-title{ align-items: flex-start; gap: 14px; }
+.revilo-relay .filters{ flex-wrap: wrap; justify-content: flex-end; }
+.revilo-relay .search input{ width: 180px; }
+.revilo-relay .channels-grid{ grid-template-columns: 1fr; }
+.revilo-relay .login-story{ padding: 35px; }
+.revilo-relay .login-story h1{ font-size: 37px; }
+.revilo-relay .login-orbit{ gap: 8px; }
+.revilo-relay .login-orbit span{ padding: 8px; }}
+@media (max-width: 650px){.revilo-relay .sidebar{ position: static; width: 100%; padding: 15px 20px; display: block; }
+.revilo-relay .workspace{ display: block; }
+.revilo-relay .brand{ font-size: 24px; }
+.revilo-relay .brand > span{ font-size: 23px; }
+.revilo-relay .workspace-name,.revilo-relay .nav-label,.revilo-relay .sidebar-bottom{ display: none; }
+.revilo-relay .sidebar nav{ display: flex; margin-top: 14px; justify-content: space-between; gap: 0px; }
+.revilo-relay .sidebar nav button{ font-size: 10px; padding: 9px 8px; gap: 5px; }
+.revilo-relay .sidebar nav button > span{ font-size: 15px; }
+.revilo-relay .sidebar nav button b{ display: none; }
+.revilo-relay .main-shell{ margin: 0px; }
+.revilo-relay .topbar{ height: 51px; padding: 0px 20px; font-size: 10px; }
+.revilo-relay .top-right{ gap: 10px; }
+.revilo-relay .storage-indicator{ font-size: 9px; }
+.revilo-relay main{ padding: 24px 20px; }
+.revilo-relay .page-heading{ align-items: flex-start; flex-direction: column; margin-bottom: 22px; }
+.revilo-relay .page-heading h1{ font-size: 29px; }
+.revilo-relay .heading-actions{ justify-content: flex-start; }
+.revilo-relay .stat{ padding: 15px; }
+.revilo-relay .stat-value{ font-size: 26px; }
+.revilo-relay .channel-strip{ padding: 12px; flex-wrap: wrap; }
+.revilo-relay .channel-strip strong{ font-size: 9px; }
+.revilo-relay .channel-strip > a{ font-size: 9px; }
+.revilo-relay .product-grid{ gap: 13px; }
+.revilo-relay .product-photo{ height: 135px; }
+.revilo-relay .laptop{ width: 110px; }
+.revilo-relay .laptop-screen{ height: 70px; }
+.revilo-relay .product-body h3{ font-size: 11px; min-height: 47px; }
+.revilo-relay .product-body{ padding: 12px; }
+.revilo-relay .card-price{ font-size: 18px; }
+.revilo-relay .card-bottom .mini-logo{ width: 17px; height: 17px; font-size: 7px; }
+.revilo-relay .card-bottom button{ font-size: 9px; }
+.revilo-relay .card-meta{ font-size: 8px; }
+.revilo-relay .section-title{ flex-direction: column; gap: 14px; }
+.revilo-relay .filters{ width: 100%; justify-content: flex-start; }
+.revilo-relay .search{ flex: 1 1 0%; }
+.revilo-relay .search input{ width: 100%; }
+.revilo-relay footer{ padding: 20px; font-size: 8px; gap: 10px; }
+.revilo-relay footer > span:last-child{ display: none; }
+.revilo-relay .dialog-head{ padding: 18px; }
+.revilo-relay .editor-main,.revilo-relay .editor-side,.revilo-relay .connection-body{ padding: 20px; }
+.revilo-relay .dialog-footer{ padding: 14px 18px; flex-wrap: wrap; }
+.revilo-relay .dialog-footer .btn{ font-size: 10px; }
+.revilo-relay .login{ grid-template-columns: 1fr; }
+.revilo-relay .login-story{ min-height: 300px; padding: 25px; }
+.revilo-relay .login-story h1{ font-size: 31px; margin: 18px 0px; }
+.revilo-relay .login-story p{ font-size: 11px; }
+.revilo-relay .login-story small,.revilo-relay .login-orbit{ display: none; }
+.revilo-relay .login-story .brand{ margin-bottom: 25px; }
+.revilo-relay .login-form{ padding: 35px 25px; }
+.revilo-relay .activity-top{ align-items: flex-start; }
+.revilo-relay .activity-result{ flex-wrap: wrap; }
+.revilo-relay .activity-result strong{ min-width: auto; }
+.revilo-relay .field-row{ gap: 10px; }}
+.revilo-relay .filters{align-items:center}
+.revilo-relay .filters label{margin-bottom:0}
+.revilo-relay .filters select{width:auto;min-width:135px}
+.revilo-relay{border:1px solid #e0e7dd;border-radius:12px;overflow:hidden;background:#f7f9f8;font-family:Inter,"Segoe UI",sans-serif;color:#1d2c2a}
+.revilo-relay .main-shell{margin-left:0}.revilo-relay .workspace{min-height:500px;display:block}
+.revilo-relay main{padding:30px;max-width:none}.revilo-relay .native-relay-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 25px;border-bottom:1px solid #e2e8df;background:#fff}
+.revilo-relay .native-relay-tabs{display:flex;gap:6px;flex-wrap:wrap}.revilo-relay .native-relay-tabs button{padding:9px 12px;border:0;border-radius:6px;background:transparent;color:#6b8270;font-size:11px}.revilo-relay .native-relay-tabs button.active{background:#e8f1e8;color:#28593a}.revilo-relay .native-relay-tabs b{font-size:9px;margin-left:5px}
+.revilo-relay .native-relay-top>span{font-size:10px;color:#86a18b}.revilo-relay .website-fields{padding:16px;background:#f2f6ef;border:1px solid #dce7d8;border-radius:8px;margin-bottom:20px}.revilo-relay .website-fields h3{margin-bottom:16px}.revilo-relay .website-fields .field-row{margin:0}.revilo-relay .website-fields p{font-size:10px;margin:10px 0}.revilo-relay .website-fields select{width:100%}
+.revilo-relay .website-fields .check-label{margin-top:12px}.revilo-relay .native-picker{padding:24px}.revilo-relay .native-picker select{margin:15px 0;max-width:100%}.revilo-relay .native-picker h2{font-size:20px}
+@media(max-width:1000px){.revilo-relay .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.revilo-relay .stats{grid-template-columns:repeat(2,minmax(0,1fr))}.revilo-relay .channels-grid{grid-template-columns:1fr}.revilo-relay .section-title{flex-wrap:wrap;gap:12px}.revilo-relay .editor-columns{grid-template-columns:1fr}.revilo-relay .editor-side{border-left:0;border-top:1px solid #e5ece1}}
+@media(max-width:650px){.revilo-relay main{padding:20px 14px}.revilo-relay .native-relay-top{padding:12px}.revilo-relay .native-relay-top>span{display:none}.revilo-relay .native-relay-tabs button{font-size:10px;padding:8px}.revilo-relay .heading-actions .btn{font-size:10px}}

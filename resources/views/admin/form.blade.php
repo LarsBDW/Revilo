@@ -23,6 +23,31 @@ $value=old($field,$value??($defaults[$field]??''));
 @elseif($type==='select' || $type==='product')<select id="{{ $field }}" name="{{ $field }}" @if(str_contains($details[2],'required')) required @endif>@if(str_contains($details[2],'nullable'))<option value="">Geen</option>@endif @foreach($type==='product'?$models:collect($details[3]) as $option)<option value="{{ $type==='product'?$option->id:$option }}" @selected((string)$value===(string)($type==='product'?$option->id:$option))>{{ $type==='product'?'#'.$option->id.' · '.$option->brand.' '.$option->name:$option }}</option>@endforeach</select>
 @else<input id="{{ $field }}" name="{{ $field }}" type="{{ $type==='money'?'text':$type }}" value="{{ $value }}" @if($type==='number') step="any" @endif @if(str_contains($details[2],'required')) required @endif>@endif
 @endif @error($field)<span class="help" style="color:#9b4127">{{ $message }}</span>@enderror</div>@endforeach</div><div class="form-actions"><button class="btn btn-primary">Opslaan <i data-lucide="check"></i></button></div></form>
-@if($record->exists && in_array($resource,['products','inventory']))<section class="panel admin-section"><h2>{{ $resource==='inventory'?'Foto’s van deze individuele laptop':'Modelafbeeldingen' }}</h2><div class="photo-list">@foreach($record->images??[] as $photo)<img src="{{ $photo }}" alt="Productfoto">@endforeach</div><form method="post" action="{{ route('admin.image',['resource'=>$resource,'id'=>$record->id]) }}" enctype="multipart/form-data"><div class="form-field">@csrf<label for="image">Foto toevoegen (JPG, PNG, WebP · maximaal 5 MB)</label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp" required></div><button class="btn btn-outline">Uploaden</button></form></section>@endif
+@if($record->exists && in_array($resource,['products','inventory']))
+<section class="panel admin-section">
+    <h2>{{ $resource==='inventory'?'Foto’s van deze individuele laptop':'Modelafbeeldingen' }}</h2>
+    <div class="photo-list">
+        @forelse($record->images??[] as $photo)
+        <figure class="admin-photo">
+            <img src="{{ $photo }}" alt="Productfoto {{ $loop->iteration }}">
+            <form method="post" action="{{ route('admin.image.destroy',['resource'=>$resource,'id'=>$record->id]) }}" data-confirm="Deze afbeelding verwijderen?">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="image" value="{{ $photo }}">
+                <button class="btn btn-danger" type="submit" aria-label="Afbeelding {{ $loop->iteration }} verwijderen">Verwijderen</button>
+            </form>
+        </figure>
+        @empty
+        <p class="help">Nog geen afbeeldingen.</p>
+        @endforelse
+    </div>
+    @error('image')<p class="help" role="alert">{{ $message }}</p>@enderror
+    <form method="post" action="{{ route('admin.image',['resource'=>$resource,'id'=>$record->id]) }}" enctype="multipart/form-data">
+        @csrf
+        <div class="form-field"><label for="image">Foto toevoegen (JPG, PNG, WebP · maximaal 5 MB)</label><input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp" required></div>
+        <button class="btn btn-outline">Uploaden</button>
+    </form>
+</section>
+@endif
 @if($record->exists && $resource==='inventory')<section class="panel admin-section"><h2>Testresultaten</h2><form method="post" action="{{ route('admin.inventory.tests',['id'=>$record->id]) }}">@csrf<div class="admin-form-grid">@foreach(['display','keyboard','trackpad','ram','ssd','battery','wifi','bluetooth','webcam','microphone','speakers','usb','video_outputs','charger','cooling','physical'] as $test)<div class="form-field"><label for="test-{{ $test }}">{{ ucfirst(str_replace('_',' ',$test)) }}</label><select id="test-{{ $test }}" name="tests[{{ $test }}]">@foreach(['not_tested'=>'Niet getest','pass'=>'Geslaagd','fail'=>'Afgekeurd'] as $result=>$label)<option value="{{ $result }}" @selected(($tests->get($test)?->result??'not_tested')===$result)>{{ $label }}</option>@endforeach</select></div>@endforeach</div><div class="form-field"><label for="notes">Toelichting</label><textarea id="notes" name="notes"></textarea></div><button class="btn btn-primary">Tests opslaan</button></form></section><section class="panel admin-section"><h2>Voorraadgeschiedenis</h2>@forelse($history as $event)<div class="summary-row"><span>{{ $event->from_status??'Nieuw' }} → {{ $event->to_status }}<br>{{ $event->note }}</span><time>{{ $event->created_at->format('d-m-Y H:i') }}</time></div>@empty<p>Nog geen wijzigingen.</p>@endforelse</section>@endif
 @endsection

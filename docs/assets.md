@@ -1,6 +1,6 @@
 # Revilo visual assets
 
-Prepared on 9 October 2026. All assets are self-hosted in `public/assets`; the storefront does not need to contact a font or image CDN.
+Prepared on 9 October 2026; homepage banner updated on 10 October 2026. All assets are self-hosted in `public/assets`; the storefront does not need to contact a font or image CDN.
 
 ## User-supplied branding
 
@@ -9,10 +9,10 @@ These files are unchanged, byte-for-byte copies of the user's originals. SHA-256
 | Served path | Original | Dimensions | Transparency |
 | --- | --- | --- | --- |
 | `/assets/brand.png` | `C:/Users/eajde/OneDrive/Bureaublad/Revilo/Brand.png` | 2172 × 724 | Transparent |
-| `/assets/hero.png` | `C:/Users/eajde/OneDrive/Bureaublad/Revilo/homepage banner.png` | 1672 × 941 | Opaque |
+| `/assets/hero-warm.png` | `C:/Users/eajde/OneDrive/Bureaublad/Revilo/homepage banner new.png` | 1672 × 941 | Opaque |
 | `/assets/icon.png` | `C:/Users/eajde/OneDrive/Bureaublad/Revilo/icon.png` | 1254 × 1254 | Transparent |
 
-The banner has open space on the left for the homepage heading and call to action. The blue wordmark and leaf/laptop motif establish the brand identity.
+The warmer banner has open space on the left for the homepage heading and call to action. Mobile background and readability overlays use matching cream tones. The blue wordmark and leaf/laptop motif establish the brand identity.
 
 ## Inter
 

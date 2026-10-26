@@ -51,8 +51,9 @@ class StoreController extends Controller
             $quote = $configuration ? $this->catalog->quote($product, $configuration) : null;
         }
         $similar = $this->catalog->matching(['category' => $product->category, 'in_stock' => 1])->reject(fn ($s) => $s['model']->id === $product->id)->take(4);
+        $optionPrices = $configuration ? $this->catalog->optionPrices($product, $configuration) : [];
 
-        return view('store.product', compact('product', 'summary', 'configuration', 'quote', 'similar'));
+        return view('store.product', compact('product', 'summary', 'configuration', 'quote', 'similar', 'optionPrices'));
     }
 
     public function quote(Request $r, string $locale, ProductModel $product)
@@ -61,12 +62,13 @@ class StoreController extends Controller
         abort_if($quantity < 1 || $quantity > 20, 422);
         $c = $this->catalog->configuration($product, $r->all());
         $availability = $this->catalog->availability($product, $c);
+        $optionPrices = $this->catalog->optionPrices($product, $c);
         try {
             $quote = $this->catalog->quote($product, $c, $quantity);
 
-            return response()->json(array_merge($quote, ['availability' => $availability]));
+            return response()->json(array_merge($quote, ['availability' => $availability, 'option_prices' => $optionPrices]));
         } catch (ValidationException $e) {
-            return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors(), 'availability' => $availability], 422);
+            return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors(), 'availability' => $availability, 'option_prices' => $optionPrices], 422);
         }
     }
 

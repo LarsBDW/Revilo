@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect('/nl'))->name('root');
 Route::get('/sitemap.xml', [StoreController::class, 'sitemap']);
-Route::get('/robots.txt', fn () => response("User-agent: *\nDisallow: /admin\nDisallow: /*/account\nDisallow: /*/checkout\nDisallow: /*/cart\nSitemap: ".url('/sitemap.xml'), 200, ['Content-Type' => 'text/plain']));
+Route::get('/robots.txt', fn () => response(config('revilo.public_preview')
+    ? "User-agent: *\nDisallow: /\n"
+    : "User-agent: *\nDisallow: /admin\nDisallow: /*/account\nDisallow: /*/checkout\nDisallow: /*/cart\nSitemap: ".url('/sitemap.xml'), 200, ['Content-Type' => 'text/plain']));
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->middleware(['locale', 'throttle:10,1'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->middleware(['locale', 'throttle:20,1'])->name('auth.google.callback');
 Route::prefix('{locale}')->where(['locale' => 'nl|en|de'])->middleware('locale')->group(function () {
@@ -106,4 +108,7 @@ Route::prefix('admin')->middleware(['locale', 'auth', 'admin'])->name('admin.')-
     Route::get('/{resource}/{id}/edit', [AdminController::class, 'form'])->where('resource', 'products|inventory|components|discounts')->whereNumber('id')->name('edit');
     Route::put('/{resource}/{id}', [AdminController::class, 'save'])->where('resource', 'products|inventory|components|discounts')->whereNumber('id')->name('update');
     Route::post('/{resource}/{id}/image', [AdminController::class, 'image'])->where('resource', 'products|inventory')->whereNumber('id')->name('image');
+    Route::delete('/{resource}/{id}/image', [AdminController::class, 'removeImage'])->where('resource', 'products|inventory')->whereNumber('id')->name('image.destroy');
 });
+
+require __DIR__.'/marketplaces.php';

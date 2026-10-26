@@ -16,16 +16,16 @@ If the local processes have stopped, run from this directory:
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-local.ps1
 ```
 
-This starts only project-owned localhost processes. It does not alter XAMPP or Windows services. MySQL uses port **3307**, the webshop **8000**. The project-local portable MySQL runtime is ignored by Git and is not part of a deployment.
+This starts only project-owned localhost processes and checks the database and login page before reporting success. It does not alter XAMPP or Windows services. MySQL uses port **3307**, the webshop **8000**. The project-local portable MySQL runtime is ignored by Git and is not part of a deployment. Run this again after restarting Windows or when the local processes have stopped.
 
 ## What works
 
 - Database product models with separate physical laptop units, encrypted private serial numbers, conditions, defects, battery records, tests, photos and movement history.
 - Supported RAM, SSD, OS, grades, keyboards, batteries, chargers and warranty configuration. Fulfillable native or compatible component upgrades only. Server pricing, live compatibility controls and per-unit price snapshots.
 - Combined stock-aware filters, sorting, autocomplete, pagination, quick view, wishlist, comparison, recently viewed products and a laptop finder.
-- Database carts, a 30-day encrypted guest cart cookie, account cart merging, coupons and NL/BE shipping.
+- Database carts, a 30-day encrypted guest cart cookie, account cart merging, coupons and NL/BE/DE shipping. Germany costs €9.95; delivery is free from €250. Shipping rates remain editable in admin Settings.
 - Local test checkout with atomic row locking, expiring reservations, idempotent order submission, immutable product/price snapshots and secure guest confirmation links.
-- Account registration, password login/reset, verification links, saved addresses, order history and return requests. Google Socialite OAuth is implemented and waits for provider credentials.
+- Account registration, password login/reset, verification links, saved addresses, order history and return requests. Checkout asks customers whether to use one of their saved addresses, with editable delivery fields. Google Socialite OAuth is implemented and configured for this local environment.
 - Admin product, physical-unit, component, discount, customer, review/report, order, return, inquiry and content management. Role checks protect every action.
 - CSV upload/mapping/preview, row errors, duplicate serial/ID checks, explicit skip/update confirmation, import history and CSV exports.
 - Safe HTML pro forma documents with browser Print / Save as PDF. Test documents are never presented as paid tax invoices.
@@ -36,6 +36,8 @@ This starts only project-owned localhost processes. It does not alter XAMPP or W
 The seed contains **6 models and 18 clearly labelled demo units** plus compatible sample parts. Photographs are manufacturer model references, not photographs of these demo units. No reviews, certifications or passed tests are fabricated.
 
 ## Fresh installation
+
+For the prepared alwaysdata Free preview package and dashboard steps, follow [alwaysdata setup](docs/alwaysdata-setup.md). Run `scripts/package-alwaysdata.ps1` to build an upload ZIP with frontend assets and without local secrets or data. Server credentials and Google callbacks are configured separately after upload.
 
 Requirements: PHP 8.2+ with PDO MySQL, OpenSSL, mbstring, fileinfo, curl, DOM/XML and GD; Composer 2; Node 20.19+; MySQL 8.0+ (8.4 used here). Use a supported patched PHP runtime for deployment.
 
@@ -68,7 +70,7 @@ php artisan queue:work --tries=3
 php artisan schedule:work
 ```
 
-The build uses public assets directly, so Vite may report that /assets/hero.png and the Inter font will resolve at runtime. Both files exist in public/assets.
+The build uses public assets directly, so Vite may report that /assets/hero-warm.png and the Inter font will resolve at runtime. Both files exist in public/assets.
 
 ## Administrator setup
 
@@ -108,7 +110,7 @@ Follow the [step-by-step Google Cloud setup guide](docs/google-setup.md) to crea
 
 Both login and registration have dedicated Google buttons. New users confirm the Revilo terms before a verified customer account is created; returning users sign in directly. Existing password accounts can explicitly link the matching Google identity in their profile after password login. Google signup does not subscribe anyone to marketing or grant admin access.
 
-Register the exact production HTTPS callback separately. Socialite checks OAuth state and PKCE, and only a verified Google email is accepted. Pending signup identity data expires after ten minutes; Google tokens are not stored. When credentials are missing, the UI explains that setup is pending and provides the email alternative. Google credentials have not been supplied in this prepared environment.
+Register the exact production HTTPS callback separately. Socialite checks OAuth state and PKCE, and only a verified Google email is accepted. Pending signup identity data expires after ten minutes; Google tokens are not stored. When credentials are missing, the UI explains that setup is pending and provides the email alternative. The prepared local environment has private Google credentials configured; a full human Google sign-in round trip still needs to be completed.
 
 ## Email and consent
 
@@ -148,6 +150,8 @@ Integration tests cover multilingual pages, admin authorization, private data, c
 
 ## Production deployment and pending external setup
 
+For a €0 public preview on Oracle's Always Free server, use the [step-by-step Oracle guide](docs/oracle-setup.md). The container setup provides automatic HTTPS, private MySQL, persistent storage, a queue worker, scheduler, configuration checks and a backup command. It creates separate server credentials and keeps email, checkout and search indexing in preview mode. The guide identifies the free limits and the account/VM steps that still require your own setup.
+
 Deploy on a PHP-FPM/Nginx or Apache host, with the web root set to **public/**. Cloudflare Workers cannot execute this PHP application. Build assets in CI, install Composer dependencies with --no-dev --optimize-autoloader, provide secrets outside Git and run migrations against the intended database.
 
 Use APP_ENV=production, APP_DEBUG=false, HTTPS APP_URL, SESSION_SECURE_COOKIE=true and TEST_CHECKOUT_ENABLED=false. Configure trusted proxies for your actual host, ensure only storage/framework and storage/logs plus private/public upload directories are writable, run queue workers with a process supervisor and run **php artisan schedule:run** each minute. Back up the database, private invoice/email data, images and APP_KEY securely. Changing APP_KEY loses access to encrypted serials/sessions.
@@ -165,7 +169,7 @@ php artisan view:cache
 Before opening:
 - Replace demonstration inventory with genuinely inspected units and verified compatible parts, licensed software and actual unit photos.
 - Supply company identity, address, registration/VAT number, support contacts, social links and reliable delivery terms.
-- Review the editable legal drafts and withdrawal/return instructions for NL/BE. Commercial warranty does not replace statutory rights. [EU consumer information](https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_en.htm).
+- Review the editable legal drafts and withdrawal/return instructions for NL/BE/DE. Commercial warranty does not replace statutory rights. [EU consumer information](https://europa.eu/youreurope/citizens/consumers/shopping/guarantees/index_en.htm).
 - Configure and verify Google credentials and a real mail provider; establish bounce/suppression handling, retention and consent procedures.
 - Complete production VAT/accounting configuration and formal invoices.
 - Implement the chosen payment provider with a signed, idempotent webhook and server-side amount/currency matching. Only a verified provider event may set paid_at, provider_confirmed or real paid revenue. Never copy the local simulation into a live payment confirmation.
@@ -173,3 +177,7 @@ Before opening:
 - Perform production security/accessibility and operational review on the real hosting setup.
 
 **No live payments are implemented or accepted.** Local test fulfillment deliberately leaves provider_confirmed=false and paid_at empty.
+
+## Marketplacebeheer
+
+De admin bevat nu Marketplaces op /admin/marketplaces. Nieuwe laptops worden tegelijk in de Revilo-catalogus en fysieke voorraad opgeslagen. Bestaande voorraad kan zonder duplicaten gekoppeld worden. Eigen OAuth-gegevens beheer je in de admin. Zie [docs/marketplaces.md](docs/marketplaces.md) voor API-toegang, beperkingen en deployment. Na het pullen: voer de nieuwe migratie uit en bouw de Vite-assets opnieuw.
